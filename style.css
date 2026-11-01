@@ -8,7 +8,6 @@
 @media(max-width:380px){.shell{width:calc(100% - 40px)}nav{gap:0 18px}nav a{font-size:12px}h1{font-size:32px;letter-spacing:-.8px}.portrait{width:184px}.study-year,.contact-email{font-size:15px}.profile-links{gap:20px}.education-heading{flex-direction:column;gap:2px}.footer-inner{flex-direction:column;gap:7px;padding-block:22px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
-
 /* A small day/night orbit, with the reading palette kept deliberately quiet. */
 :root{--selection:#dbe9f3;--track:#dae5ef;--track-border:#a6b9ca;--orb:#fff8df;--orb-ink:#8b5b0b}
 :root[data-theme="night"]{--canvas:#0e1929;--paper:#142237;--ink:#e8eef6;--muted:#b0bfd1;--accent:#a6d0f4;--line:#2b3d54;--selection:#294969;--track:#223c5b;--track-border:#617e9f;--orb:#e0edff;--orb-ink:#294764}
@@ -27,5 +26,13 @@
 
 
 
-
-
+/* Language and palette controls share a compact, keyboard-accessible toolbar. */
+.header-tools{display:flex;align-items:center;justify-self:end;gap:10px;min-width:0}
+.language-control{display:flex;align-items:center;gap:5px;color:var(--muted)}
+.language-control[hidden]{display:none}.language-control svg{width:18px;height:18px;flex-shrink:0}
+.language-control select{max-width:118px;min-height:44px;border:0;border-radius:4px;padding:7px 4px;background:var(--canvas);color:var(--ink);font:inherit;font-size:13px;cursor:pointer}
+.language-control select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+:lang(zh-Hans) .academic-content,:lang(zh-Hant) .academic-content{line-height:1.9}
+:lang(zh-Hant){--display:"Palatino Linotype","Book Antiqua",Palatino,"Noto Serif CJK TC","PMingLiU",serif;--body:"Aptos","Candara","Microsoft JhengHei",sans-serif}
+@media(max-width:1100px){.header-inner{grid-template-columns:minmax(0,1fr) auto;row-gap:8px;padding-block:18px 12px}.header-inner nav{grid-column:1/-1;grid-row:2;justify-self:start}.header-tools{grid-column:2;grid-row:1}}
+@media(max-width:540px){.header-inner{grid-template-columns:minmax(0,1fr);row-gap:3px}.header-inner .wordmark{grid-column:1;grid-row:1}.header-tools{grid-column:1;grid-row:2}.header-inner nav{grid-column:1;grid-row:3}.header-tools .theme-toggle{width:64px}}

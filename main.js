@@ -27,8 +27,84 @@ function applyTheme(theme) {
   if (themeToggle) {
     themeToggle.setAttribute('aria-pressed', String(night));
     themeToggle.title = night ? 'Switch to day mode' : 'Switch to night mode';
+    const lang = document.documentElement.lang;
+    if (lang === 'zh-Hans') themeToggle.title = night ? '切换至日间模式' : '切换至夜间模式';
+    if (lang === 'zh-Hant') themeToggle.title = night ? '切換至日間模式' : '切換至夜間模式';
+    themeToggle.setAttribute('aria-label', themeToggle.title);
   }
 }
+
+// English remains the default; visitors can persist an explicit language choice.
+// Only locally authored strings are used as HTML. Names, links and the English CV stay intact.
+const translatedSelectors = [
+  '.skip-link', '.wordmark', 'nav a[href="#about"]', 'nav a[href="#research"]',
+  'nav a[href="#background"]', 'nav a[href="#publications"]', 'nav a[href="#contact"]',
+  '#name', '.study-year', '.affiliation', '.name-zh',
+  '.profile-links a[href*="hkubs"]', '.profile-links a[href$=".pdf"]',
+  '#about-heading', '.introduction', '#research-heading', '.interest-list li:nth-child(1)',
+  '.interest-list li:nth-child(2)', '.interest-list li:nth-child(3)', '#background-heading',
+  '.education:nth-child(1) h3', '.education:nth-child(1) .education-date',
+  '.education:nth-child(1) p:nth-of-type(1)', '.education:nth-child(1) p:nth-of-type(2)',
+  '.education:nth-child(2) h3', '.education:nth-child(2) p', '#publications-heading',
+  '.publication h3', '.publication p:last-child', '.footer-inner span:last-child'
+];
+const englishContent = translatedSelectors.map(selector => document.querySelector(selector).innerHTML);
+const languages = {
+  en: englishContent,
+  'zh-Hans': [
+    '跳至正文', '邓梦毫', '关于我', '研究兴趣', '教育经历', '学术论文', '联系方式',
+    '邓梦毫', '金融学博士生 · 二年级', '香港大学经管学院<br>香港大学', 'Menghao Deng',
+    '港大主页', '英文简历（PDF）', '关于我',
+    '我目前是香港大学<a href="https://www.hkubs.hku.hk/">经管学院</a>金融学二年级博士生，于 2025 年获得香港大学数学理学学士学位。我尤其关注量化研究、机器学习、行为金融和文本分析。',
+    '研究兴趣', '人工智能的商业应用', '公司金融', '金融科技', '教育经历',
+    '金融学博士', '二年级', '香港大学经管学院', '香港大学', '数学理学学士', '香港大学',
+    '学术论文', '中国春节期间烟花相关 PM<sub>2.5</sub> 与无人机表演关注度',
+    '<em>npj Clean Air</em> · 2026 年 10 月 29 日录用。',
+    '最后更新：<time datetime="2026-11-01">2026 年 11 月 1 日</time>'
+  ],
+  'zh-Hant': [
+    '跳至正文', '鄧夢毫', '關於我', '研究興趣', '教育經歷', '學術論文', '聯絡方式',
+    '鄧夢毫', '金融學博士生 · 二年級', '香港大學經管學院<br>香港大學', 'Menghao Deng',
+    '港大主頁', '英文履歷（PDF）', '關於我',
+    '我目前是香港大學<a href="https://www.hkubs.hku.hk/">經管學院</a>金融學二年級博士生，於 2025 年獲得香港大學數學理學學士學位。我尤其關注量化研究、機器學習、行為金融和文本分析。',
+    '研究興趣', '人工智能的商業應用', '公司金融', '金融科技', '教育經歷',
+    '金融學博士', '二年級', '香港大學經管學院', '香港大學', '數學理學學士', '香港大學',
+    '學術論文', '中國春節期間煙花相關 PM<sub>2.5</sub> 與無人機表演關注度',
+    '<em>npj Clean Air</em> · 2026 年 10 月 29 日獲接納。',
+    '最後更新：<time datetime="2026-11-01">2026 年 11 月 1 日</time>'
+  ]
+};
+const languageSelect = document.getElementById('language-select');
+const englishTitle = document.title;
+const metaDescription = document.querySelector('meta[name="description"]');
+const englishDescription = metaDescription.content;
+function applyLanguage(requested) {
+  const lang = Object.prototype.hasOwnProperty.call(languages, requested) ? requested : 'en';
+  document.documentElement.lang = lang;
+  translatedSelectors.forEach((selector, index) => {
+    document.querySelector(selector).innerHTML = languages[lang][index];
+  });
+  const chinese = lang !== 'en';
+  const traditional = lang === 'zh-Hant';
+  document.title = chinese ? `${traditional ? '鄧夢毫 | 香港大學金融學博士生' : '邓梦毫 | 香港大学金融学博士生'}` : englishTitle;
+  metaDescription.content = chinese ? document.querySelector('.introduction').textContent : englishDescription;
+  document.querySelector('.name-zh').lang = chinese ? 'en' : 'zh-Hans';
+  document.querySelector('.wordmark').setAttribute('aria-label', chinese ? (traditional ? '鄧夢毫，首頁' : '邓梦毫，首页') : 'Menghao Deng, home');
+  document.querySelector('nav').setAttribute('aria-label', chinese ? (traditional ? '主要導覽' : '主导航') : 'Main navigation');
+  document.querySelector('.portrait img').alt = chinese ? (traditional ? '鄧夢毫的照片' : '邓梦毫的照片') : 'Portrait of Menghao Deng';
+  document.querySelector('.identity-contact').setAttribute('aria-label', chinese ? (traditional ? '聯絡資訊' : '联系信息') : 'Contact information');
+  document.querySelector('.profile-links').setAttribute('aria-label', chinese ? (traditional ? '個人檔案連結' : '个人资料链接') : 'Professional profiles');
+  languageSelect.value = lang;
+  applyTheme(document.documentElement.dataset.theme);
+}
+let savedLanguage = 'en';
+try { savedLanguage = localStorage.getItem('menghao-language') || 'en'; } catch (_) {}
+applyLanguage(savedLanguage);
+languageSelect.closest('label').hidden = false;
+languageSelect.addEventListener('change', () => {
+  applyLanguage(languageSelect.value);
+  try { localStorage.setItem('menghao-language', languageSelect.value); } catch (_) {}
+});
 
 applyTheme(chosenTheme || (systemTheme && systemTheme.matches ? 'night' : 'light'));
 if (themeToggle) {
