@@ -26,6 +26,14 @@
 
 
 
+/* Keep the CV on its own row and selected papers visually distinct. */
+.cv-link-row{flex:0 0 100%}
+.publication + .publication{margin-top:28px}
+.publication h3{font-size:20px;line-height:1.5}
+.publication h3 a{text-decoration-color:var(--line)}
+.publication p{margin-top:7px;font-size:17px;line-height:1.7}
+.publication p:last-child{color:var(--muted)}
+
 /* Language and palette controls share a compact, keyboard-accessible toolbar. */
 .header-tools{display:flex;align-items:center;justify-self:end;gap:10px;min-width:0}
 .language-control{display:flex;align-items:center;gap:5px;color:var(--muted)}

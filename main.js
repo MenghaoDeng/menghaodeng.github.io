@@ -46,32 +46,37 @@ const translatedSelectors = [
   '.education:nth-child(1) h3', '.education:nth-child(1) .education-date',
   '.education:nth-child(1) p:nth-of-type(1)', '.education:nth-child(1) p:nth-of-type(2)',
   '.education:nth-child(2) h3', '.education:nth-child(2) p', '#publications-heading',
-  '.publication h3', '.publication p:last-child', '.footer-inner span:last-child'
+  '#publication-fireworks h3', '#publication-fireworks p:last-child',
+  '#publication-lstm h3 a', '#publication-lstm p:last-child', '.footer-inner span:last-child'
 ];
 const englishContent = translatedSelectors.map(selector => document.querySelector(selector).innerHTML);
 const languages = {
   en: englishContent,
   'zh-Hans': [
-    '跳至正文', '邓梦毫', '关于我', '研究兴趣', '教育经历', '学术论文', '联系方式',
+    '跳至正文', '邓梦毫', '关于我', '研究兴趣', '教育经历', '精选论文', '联系方式',
     '邓梦毫', '金融学博士生 · 二年级', '香港大学经管学院<br>香港大学', 'Menghao Deng',
     '港大主页', '英文简历（PDF）', '关于我',
     '我目前是香港大学<a href="https://www.hkubs.hku.hk/">经管学院</a>金融学二年级博士生，于 2025 年获得香港大学数学理学学士学位。我尤其关注量化研究、机器学习、行为金融和文本分析。',
     '研究兴趣', '人工智能的商业应用', '公司金融', '金融科技', '教育经历',
     '金融学博士', '二年级', '香港大学经管学院', '香港大学', '数学理学学士', '香港大学',
-    '学术论文', '中国春节期间烟花相关 PM<sub>2.5</sub> 与无人机表演关注度',
+    '精选论文', '中国春节期间烟花相关 PM<sub>2.5</sub> 与无人机表演关注度',
     '<em>npj Clean Air</em> · 2026 年 10 月 29 日录用。',
-    '最后更新：<time datetime="2026-11-01">2026 年 11 月 1 日</time>'
+    '用于精确股价预测的 LSTM 模型隐藏单元分析',
+    '<em>第一届数据分析与机器学习国际会议论文集（DAML 2023）</em>，第 411–416 页。SciTePress，2024 年。',
+    '最后更新：<time datetime="2026-11-07">2026 年 11 月 7 日</time>'
   ],
   'zh-Hant': [
-    '跳至正文', '鄧夢毫', '關於我', '研究興趣', '教育經歷', '學術論文', '聯絡方式',
+    '跳至正文', '鄧夢毫', '關於我', '研究興趣', '教育經歷', '精選論文', '聯絡方式',
     '鄧夢毫', '金融學博士生 · 二年級', '香港大學經管學院<br>香港大學', 'Menghao Deng',
     '港大主頁', '英文履歷（PDF）', '關於我',
     '我目前是香港大學<a href="https://www.hkubs.hku.hk/">經管學院</a>金融學二年級博士生，於 2025 年獲得香港大學數學理學學士學位。我尤其關注量化研究、機器學習、行為金融和文本分析。',
     '研究興趣', '人工智能的商業應用', '公司金融', '金融科技', '教育經歷',
     '金融學博士', '二年級', '香港大學經管學院', '香港大學', '數學理學學士', '香港大學',
-    '學術論文', '中國春節期間煙花相關 PM<sub>2.5</sub> 與無人機表演關注度',
+    '精選論文', '中國春節期間煙花相關 PM<sub>2.5</sub> 與無人機表演關注度',
     '<em>npj Clean Air</em> · 2026 年 10 月 29 日獲接納。',
-    '最後更新：<time datetime="2026-11-01">2026 年 11 月 1 日</time>'
+    '用於精確股價預測的 LSTM 模型隱藏單元分析',
+    '<em>第一屆數據分析與機器學習國際會議論文集（DAML 2023）</em>，第 411–416 頁。SciTePress，2024 年。',
+    '最後更新：<time datetime="2026-11-07">2026 年 11 月 7 日</time>'
   ]
 };
 const languageSelect = document.getElementById('language-select');
